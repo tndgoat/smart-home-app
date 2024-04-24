@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const connect = async () => {
     try {
         await mongoose.connect(
-            'mongodb+srv://piHome:12345@cluster0.tvenq.mongodb.net/piHome?retryWrites=true&w=majority'
+            'mongodb+srv://tndgoat:smart-home-app-232@smart-home-app.7pukdmi.mongodb.net/?retryWrites=true&w=majority&appName=smart-home-app'
         )
         console.log('Connect successfully!')
     } catch (err) {
