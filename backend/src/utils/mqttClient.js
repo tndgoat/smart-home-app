@@ -1,7 +1,7 @@
 const mqtt = require('mqtt');
 const {
-    THINGSBOARD_HOST,
-    THINGSBOARD_PORT,
+    THINGSBOARD_FEEDS,
+    THINGSBOARD_KEY,
     THINGSBOARD_ACCESS_TOKEN,
 } = require('../config/thingsboard');
 const Publisher = require('./publisher');
@@ -13,7 +13,8 @@ class MqttClient extends Publisher {
         host: THINGSBOARD_HOST,
         port: THINGSBOARD_PORT,
         protocol: 'mqtt',
-        username: THINGSBOARD_ACCESS_TOKEN,
+        username: THINGSBOARD_IO_USERNAME,
+        password: THINGSBOARD_IO_KEY,
         };
 
         this.client = mqtt.connect(options);
