@@ -1,0 +1,3 @@
+const THINGSBOARD_IO_USERNAME = 'tung_nguyen';
+const THINGSBOARD_KEY = 'aio_ymDu95GcJLT60wdS7pkfJ9aYU6zF';
+const THINGSBOARD_IO_FEEDS = THINGSBOARD_IO_USERNAME + '/feeds/';
