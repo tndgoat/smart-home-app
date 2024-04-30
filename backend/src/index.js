@@ -1,3 +1,7 @@
+import AuthController from './app/controller/auth.controller'
+import FanController from './app/controller/fan.controller'
+import FireController from './app/controller/fire.controller'
+
 const express = require('express')
 const app = express()
 const dotenv = require('dotenv')
