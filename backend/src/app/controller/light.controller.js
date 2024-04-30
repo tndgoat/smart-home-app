@@ -1,5 +1,5 @@
 const io = require('socket.io-client');
-const { THINGSBOARD_IO_FEEDS } = require('../../config/thingsboard');
+const {THINGSBOARD_IO_FEEDS} = require('../../config/thingsboard');
 const MqttClient = require('../../utils/mqttClient');
 const Subscriber = require('../../utils/subscriber');
 const { DeviceModel, LightModel } = require('../model/device.model');
