@@ -10,8 +10,8 @@ class MqttClient extends Publisher {
     constructor() {
         super();
         let options = {
-        host: THINGSBOARD_HOST,
-        port: THINGSBOARD_PORT,
+        host: 'demo.thingsboard.io', //TODO: connect to live thingsboard
+        port: '1883',
         protocol: 'mqtt',
         username: THINGSBOARD_IO_USERNAME,
         password: THINGSBOARD_KEY,

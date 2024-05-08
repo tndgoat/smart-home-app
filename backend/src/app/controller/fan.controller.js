@@ -1,5 +1,5 @@
 const io = require('socket.io-client');
-const { ADAFRUIT_IO_FEEDS } = require('../../config/adafruit');
+const { ADAFRUIT_IO_FEEDS } = require('../../config/thingsboard');
 const MqttClient = require('../../utils/mqttClient');
 const Subscriber = require('../../utils/subscriber');
 const { DeviceModel, FanModel } = require('../model/device.model');
