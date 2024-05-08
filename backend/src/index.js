@@ -1,15 +1,17 @@
 
-import { Server } from 'socket.io'
-import db from './config/database'
-import MqttClient from './utils/mqttClient'
-import AuthController from './app/controller/auth.controller'
-import FanController from './app/controller/fan.controller'
-import FireController from './app/controller/fire.controller'
-import LightController from './app/controller/light.controller'
+const { Server } = require('socket.io');
+
+const db = require('./config/dbconnection');
+const MqttClient = require('./utils/mqttClient');
+const AuthController = require('./app/controller/auth.controller');
+const FanController = require('./app/controller/fan.controller');
+const FireController = require('./app/controller/fire.controller');
+const LightController = require('./app/controller/light.controller');
+const DoorController = require('./app/controller/door.controller');
 // import TemperatureController from './app/controller/temp.controller'
 
 
-import Subscriber from './utils/subscriber'
+const Subscriber = require('./utils/subscriber');
 
 const io = new Server(3000)
 db.connect()
@@ -34,9 +36,10 @@ const authController = new AuthController();
 const lightController = new LightController(mqttClient, light.feed);
 const fanController = new FanController(mqttClient, fan.feed);
 const fireController = new FireController();
+const doorController = new DoorController();
 
-mqttClient.subscribe(temperatureController, temperature.name)
-mqttClient.subscribeTopic(temperature.feed)
+// mqttClient.subscribe(temperatureController, temperature.name)
+// mqttClient.subscribeTopic(temperature.feed)
 mqttClient.subscribe(doorController, door.name)
 mqttClient.subscribeTopic(door.feed)
 mqttClient.subscribe(lightController, light.name)
