@@ -15,7 +15,7 @@ class LightController extends Subscriber {
         });
 
         this.socket.on(`client to ${this.name}`, (message) => {
-            mqttClient.sendMessage(ADAFRUIT_IO_FEEDS + topic, message);
+            mqttClient.sendMessage(THINGSBOARD_IO_FEEDS + topic, message);
         });
     }
 

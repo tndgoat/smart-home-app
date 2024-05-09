@@ -1,5 +1,5 @@
 const io = require('socket.io-client');
-const { ADAFRUIT_IO_FEEDS } = require('../../config/thingsboard');
+const { THINGSBOARD_IO_FEEDS } = require('../../config/thingsboard');
 const MqttClient = require('../../utils/mqttClient');
 const Subscriber = require('../../utils/subscriber');
 const { DeviceModel, FanModel } = require('../model/device.model');
@@ -15,7 +15,7 @@ class FanController extends Subscriber {
         });
 
         this.socket.on(`client to ${this.name}`, (message) => {
-            mqttClient.sendMessage(ADAFRUIT_IO_FEEDS + topic, message);
+            mqttClient.sendMessage(THINGSBOARD_IO_FEEDS + topic, message);
         });
     }
 
