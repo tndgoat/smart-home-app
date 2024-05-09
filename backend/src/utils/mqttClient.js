@@ -4,24 +4,36 @@ const {
     THINGSBOARD_KEY,
     THINGSBOARD_IO_USERNAME,
 } = require('../config/thingsboard');
-const Publisher = require('./publisher');
 
+const Publisher = require('./publisher');
+const mqttHost = "thingsboard.cloud";
+const protocol = "mqtt";
+const port = "1883";
+const hostURL = `${protocol}://${mqttHost}:${port}`;    
+// const hostURL = mqttHost;
+
+const options = {
+    username: 'pZVq3ThQN1oojKfRIrzc', //TODO: update token based on the current thingsboard
+    // password: 'pZVq3ThQN1oojKfRIrzc', 
+    keepalive: 60,
+    protocolId: "MQTT",     
+    protocolVersion: 4,
+    clean: true,
+    reconnectPeriod: 1000,
+    connectTimeout: 10 * 1000,
+  };
 class MqttClient extends Publisher {
     constructor() {
         super();
-        let options = {
-        host: 'demo.thingsboard.io', //TODO: connect to live thingsboard
-        port: '1883',
-        protocol: 'mqtt',
-        username: THINGSBOARD_IO_USERNAME,
-        password: THINGSBOARD_KEY,
-        };
+        this.client = mqtt.connect(hostURL, options);
 
-        this.client = mqtt.connect(options);
-
-        this.client.on('connect', () => console.log('Connected'));
+        this.client.on('connect', () => console.log('MQTT Connected to ', options.username));
         this.client.on('error', (err) => console.log(err));
-
+        this.client.on("reconnect", () => {
+    console.log("Reconnecting...");
+  });
+        this.subscribeTopic('temperature');
+        this.sendMessage('temperature', '28');
         this.receiveMessage();
     }
 
