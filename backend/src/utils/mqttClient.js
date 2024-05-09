@@ -13,7 +13,7 @@ const hostURL = `${protocol}://${mqttHost}:${port}`;
 // const hostURL = mqttHost;
 
 const options = {
-    username: 'pZVq3ThQN1oojKfRIrzc',
+    username: 'pZVq3ThQN1oojKfRIrzc', //TODO: update token based on the current thingsboard
     // password: 'pZVq3ThQN1oojKfRIrzc', 
     keepalive: 60,
     protocolId: "MQTT",     
