@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RadioButton } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
-import mqttClient from '../../../backend/src/utils/mqttClient';
+// import mqttClient from '../../../backend/src/utils/mqttClient';
 import {
     ImageBackground, StyleSheet, View, Text,
     Image, TextInput, Button, Pressable,

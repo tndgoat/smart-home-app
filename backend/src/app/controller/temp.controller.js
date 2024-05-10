@@ -2,10 +2,12 @@ const io = require('socket.io-client');
 const Subscriber = require('../../utils/subscriber');
 const { DeviceModel, TemperatureModel } = require('../model/device.model');
 const MqttClient = require('../../utils/mqttClient');
+const { get } = require('http');
 
 const mqttClient = new MqttClient();
+
 class TemperatureController extends Subscriber {
-    constructor(MqttClient, topic) {
+    constructor() {
         super();
         this.socket = io('http://localhost:3000');
 
@@ -34,7 +36,7 @@ class TemperatureController extends Subscriber {
     startTemperatureUpdates() {
         setInterval(() => {
             this.updateTemperature();
-        }, 2000); // Update every 2 seconds (2000 milliseconds)
+        }, 20000); // Update every 2 seconds (2000 milliseconds)
     }
     
     generateRandomTemperature() {
