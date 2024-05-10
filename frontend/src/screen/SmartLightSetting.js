@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { RadioButton } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
-
+import mqttClient from '../../../backend/src/utils/mqttClient';
 import {
     ImageBackground, StyleSheet, View, Text,
     Image, TextInput, Button, Pressable,
     TouchableOpacity, ScrollView, Switch
 } from 'react-native'
+
 const SmartLightSetting = ({ route }) => {
     const schedules = route.params.schedule
     // const color = route.params.color
@@ -14,7 +15,12 @@ const SmartLightSetting = ({ route }) => {
 
     const [selectedValue, setSelectedValue] = useState(route.params.color.currcolor - 1);
     const [isEnabled, setIsEnabled] = useState(route.params.status == 1);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const logSwitch = () => {
+        console.log('Button pressed!');
+        setIsEnabled(previousState => !previousState);
+        
+};
     const colorList = ["#FFAA1D", "#007BFF", "#F9280C"]
     return (
         <ScrollView showsVerticalScrollIndicator={false} >
@@ -26,12 +32,12 @@ const SmartLightSetting = ({ route }) => {
                             <Text className='text-[18px] text-center font-bold text-[#659A6E] mb-2'>{route.params.name}</Text>
                             <View className='flex justify-center items-center    '>
                                 <Text className='text-[16px]'>Power</Text>
-                                <Switch
+                                <Switch 
                                     className="scale-[1.5] "
                                     trackColor={{ false: '#D9D9D9', true: '#659A6E' }}
                                     thumbColor={isEnabled ? '#fff' : '#f4f3f4'}
-
-                                    onValueChange={toggleSwitch}
+                                    onValueChange={logSwitch}
+                                    // onValueChange={toggleSwitch}
                                     value={isEnabled}
                                 />
                             </View>

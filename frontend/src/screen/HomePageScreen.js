@@ -12,7 +12,7 @@ import {
 import { Icon } from 'react-native-elements';
 
 const devices = ["Smart Light", "Smart Fan", "Smart TV", "Fire Detection"];
-
+let today = new Date().toLocaleDateString()
 function Widget({ device, navigation }) {
   let img_link = require("../../assets/images/fire.png");
   if (device.includes("Smart Light")) {
@@ -118,7 +118,8 @@ export default function HomePageScreen({ navigation }) {
               />
               <View className='flex  max-w-[58%]'>
                 <Text style={{ fontFamily: "Poppins-Regular" }}>
-                  April 14, 2024
+                  {/* April 14, 2024 */}
+                  {today}
                 </Text>
                 <Text style={{ fontFamily: "Poppins-SemiBold" }}>Cloudy</Text>
                 <Text style={{ fontFamily: "Poppins-Regular" }}>

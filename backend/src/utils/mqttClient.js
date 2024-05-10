@@ -13,8 +13,7 @@ const hostURL = `${protocol}://${mqttHost}:${port}`;
 // const hostURL = mqttHost;
 
 const options = {
-    username: 'pZVq3ThQN1oojKfRIrzc', //TODO: update token based on the current thingsboard
-    // password: 'pZVq3ThQN1oojKfRIrzc', 
+    username: 'jIQRII9MGYPYuz4wvV5O', //TODO: update token based on the current thingsboard
     keepalive: 60,
     protocolId: "MQTT",     
     protocolVersion: 4,
@@ -29,17 +28,17 @@ class MqttClient extends Publisher {
 
         this.client.on('connect', () => console.log('MQTT Connected to ', options.username));
         this.client.on('error', (err) => console.log(err));
-        this.client.on("reconnect", () => {
-    console.log("Reconnecting...");
-  });
-        this.subscribeTopic('temperature');
-        this.sendMessage('temperature', '28');
+        this.client.on("reconnect", () => {console.log("Reconnecting...");});
         this.receiveMessage();
+        
+        // const randomTemperature = Math.floor(Math.random() * (40 - 18 + 1)) + 18;
+        // this.sendMessage('v1/devices/me/telemetry', { temperature: randomTemperature });
     }
 
     subscribeTopic(topic) {
-        this.client.subscribe(THINGSBOARD_FEEDS + topic, (err) => {
+        this.client.subscribe(topic, (err) => {
             if (err) console.log(err);
+            console.log('Subscribed to: '+ topic, )
         });
     }
 
@@ -51,7 +50,9 @@ class MqttClient extends Publisher {
     }
 
     sendMessage(topic, message) {
-        this.client.publish(topic, message);
+        console.log(`Sending Topic: ${topic}, Message: ${message.toString()}`);
+        const stringifiedMessage = JSON.stringify(message);
+        this.client.publish('v1/devices/me/telemetry', stringifiedMessage);
     }
 }
 

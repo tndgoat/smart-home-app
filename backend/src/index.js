@@ -8,6 +8,7 @@ const FanController = require('./app/controller/fan.controller');
 const FireController = require('./app/controller/fire.controller');
 const LightController = require('./app/controller/light.controller');
 const DoorController = require('./app/controller/door.controller');
+const TemperatureController = require('./app/controller/temp.controller');
 // import TemperatureController from './app/controller/temp.controller'
 
 
@@ -32,14 +33,14 @@ const [
 ].map((item) => ({ feed: `smarthome-${item}`, name: `${item}Controller` }));
 
 const authController = new AuthController();
-// const temperatureController = new TemperatureController();
+const temperatureController = new TemperatureController();
 const lightController = new LightController(mqttClient, light.feed);
 const fanController = new FanController(mqttClient, fan.feed);
 const fireController = new FireController();
 const doorController = new DoorController();
 
-// mqttClient.subscribe(temperatureController, temperature.name)
-// mqttClient.subscribeTopic(temperature.feed)
+mqttClient.subscribe(temperatureController, temperature.name)
+mqttClient.subscribeTopic(temperature.feed)
 mqttClient.subscribe(doorController, door.name)
 mqttClient.subscribeTopic(door.feed)
 mqttClient.subscribe(lightController, light.name)
