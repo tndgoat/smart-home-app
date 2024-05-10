@@ -27,25 +27,12 @@ class MqttClient extends Publisher {
         this.client = mqtt.connect(hostURL, options);
 
         this.client.on('connect', () => console.log('MQTT Connected to ', options.username));
-        // this.client.on('connect', function () {
-        // console.log('Connected to MQTT broker');
-        // const message = JSON.stringify({ temperature: 69 });
-    //     this.client.publish(topic, message, { qos: 1 }, function (error) {
-    //     if (error) {
-    //         console.error('Error publishing message:', error);
-    //     } else {
-    //         console.log('Message published successfully');
-    //     }
-    // });
-// });
-
         this.client.on('error', (err) => console.log(err));
         this.client.on("reconnect", () => {console.log("Reconnecting...");});
-        // this.subscribeTopic('temperature');
         this.receiveMessage();
-        // this.sendMessage('temperature', {temperature : 88});
-        // this.sendMessage('smarthome-light', 'sm-light: 69')
-        this.sendMessage('v1/devices/me/telemetry', {temperature : 98})
+        
+        // const randomTemperature = Math.floor(Math.random() * (40 - 18 + 1)) + 18;
+        // this.sendMessage('v1/devices/me/telemetry', { temperature: randomTemperature });
     }
 
     subscribeTopic(topic) {
@@ -63,10 +50,9 @@ class MqttClient extends Publisher {
     }
 
     sendMessage(topic, message) {
-        console.log(`Sending Topic: ${topic}, Message: ${message}`);
+        console.log(`Sending Topic: ${topic}, Message: ${message.toString()}`);
         const stringifiedMessage = JSON.stringify(message);
-        // const stringifiedMessage  = JSON.stringify({ temperature: 88 });
-        this.client.publish(topic, stringifiedMessage);
+        this.client.publish('v1/devices/me/telemetry', stringifiedMessage);
     }
 }
 
