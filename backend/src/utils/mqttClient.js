@@ -10,29 +10,30 @@ const mqttHost = "thingsboard.cloud";
 const protocol = "mqtt";
 const port = "1883";
 const hostURL = `${protocol}://${mqttHost}:${port}`;    
-// const hostURL = mqttHost;
 
 const options = {
+    clientId: 'a1',
     username: 'jIQRII9MGYPYuz4wvV5O', //TODO: update token based on the current thingsboard
-    keepalive: 60,
     protocolId: "MQTT",     
-    protocolVersion: 4,
+    protocolVersion: 5,
     clean: true,
-    reconnectPeriod: 1000,
+    reconnectPeriod: 10000,
     connectTimeout: 10 * 1000,
-  };
+};
+const client = mqtt.connect(hostURL, options);
+
+client.on('connect', () => console.log('MQTT Connected to ', options.username));
+client.on('error', (err) => console.log(err));
+client.on('reconnect', () => console.log('Reconnecting...'));
+client.on('close', () => console.log('Connection closed'));
+client.on('message', (topic, message) => {
+            console.log('Received message:', topic, message.toString());
+        });
 class MqttClient extends Publisher {
     constructor() {
         super();
-        this.client = mqtt.connect(hostURL, options);
-
-        this.client.on('connect', () => console.log('MQTT Connected to ', options.username));
-        this.client.on('error', (err) => console.log(err));
-        this.client.on("reconnect", () => {console.log("Reconnecting...");});
+        this.client = client;
         this.receiveMessage();
-        
-        // const randomTemperature = Math.floor(Math.random() * (40 - 18 + 1)) + 18;
-        // this.sendMessage('v1/devices/me/telemetry', { temperature: randomTemperature });
     }
 
     subscribeTopic(topic) {
@@ -40,6 +41,7 @@ class MqttClient extends Publisher {
             if (err) console.log(err);
             console.log('Subscribed to: '+ topic, )
         });
+        this.client.subscribe("v1/devices/me/attributes")
     }
 
     receiveMessage() {
@@ -50,9 +52,10 @@ class MqttClient extends Publisher {
     }
 
     sendMessage(topic, message) {
-        console.log(`Sending Topic: ${topic}, Message: ${message.toString()}`);
         const stringifiedMessage = JSON.stringify(message);
-        this.client.publish('v1/devices/me/telemetry', stringifiedMessage);
+        console.log(`Sending Topic: ${topic}, Message: ${stringifiedMessage}`);
+        this.client.publish('v1/devices/me/attributes', stringifiedMessage, () =>
+        { console.log('Message sent') });
     }
 }
 
