@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   StyleSheet,
@@ -14,73 +14,65 @@ import {
 import { Shadow } from "react-native-shadow-2";
 import { LinearGradient } from "expo-linear-gradient";
 import { Icon } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LightItem from "../component/DeviceItem";
-import RadioButton from "../component/RadioButton";
-import { SelectList } from "react-native-dropdown-select-list";
 import LottieView from "lottie-react-native";
-import RNPickerSelect from "react-native-picker-select";
+// import RNPickerSelect from "react-native-picker-select";
+import Voice from '@react-native-voice/voice';
 const VoiceControl = ({ }) => {
-  // const [modalVisible, setModalVisible] = useState(false);
-  // const [selectedValue, setSelectedValue] = useState('option1');
+  let [started, setStarted] = useState(false);
+  let [results, setResults] = useState([]);
   const [selectedVoice, setSelectedVoice] = React.useState(
     "Your voice display here"
   );
-
-  // const [option, setOption] = useState(null);
-
   const voiceTest = [
-    {
-      id: 1,
-      label: "Turn off all the lights",
-      value: "Turn off all the lights",
-    },
-    {
-      id: 2,
-      label: "Turn off all the televisions",
-      value: "Turn off all the televisions",
-    },
-    {
-      id: 3,
-      label: "Turn off all the fans",
-      value: "Turn off all the fans",
-    },
-    {
-      id: 4,
-      label: "Turn on all the lights",
-      value: "Turn on all the lights",
-    },
-    {
-      id: 5,
-      label: "Turn on all the televisions",
-      value: "Turn on all the televisions",
-    },
-    {
-      id: 6,
-      label: "Turn on all the fans",
-      value: "Turn on all the fans",
-    },
+    "turn off all the lights",
+    "turn off all the televisions",
+    "turn off all the fans",
+    "turn on all the lights",
+    "turn on all the televisions",
+    "turn on all the fans",
   ];
+  useEffect(() => {
+    Voice.onSpeechError = onSpeechError;
+    Voice.onSpeechResults = onSpeechResults;
+
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    }
+  }, []);
+  const toggleSpeechToText = async () => {
+    if (!started) {
+      await Voice.start("en-NZ");
+      setStarted(true);
+    }
+    else {
+      await Voice.stop();
+      setStarted(false);
+    }
+  }
+  const onSpeechResults = (result) => {
+    console.log(result.value)
+    for (let text of result.value) {
+      if (voiceTest.includes(text)) {
+        setSelectedVoice(text)
+        break
+      }
+    }
+  };
+
+  const onSpeechError = (error) => {
+    console.log(error);
+  };
+
+
+
+
 
   const handleVoiceInput = (value) => {
     setSelectedVoice(value);
   };
   return (
     <View className="flex  flex-1  bg-[#F0F5F4] justify-between pt-[20%] pb-[15%] items-center">
-      {/* <View className="flex flex-row space-x-2">
-        <TouchableOpacity className="border border-1 border-[#07DE2B] rounded-2xl py-2 px-3">
-          <Text className="text-[12px] font-light">
-            Turn off all the lights
-          </Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity className="border border-1 border-[#07DE2B] rounded-2xl py-2 px-3">
-          <Text className="text-[12px] font-light">
-            Turn on the fan in the living room
-          </Text>
-        </TouchableOpacity>
-      </View> */}
       <View>
         <Text className="text-[24px] font-regular">Say Something</Text>
       </View>
@@ -97,22 +89,11 @@ const VoiceControl = ({ }) => {
       </View>
 
       <View className="flex flex-row justify-center items-center space-x-10">
-        <TouchableOpacity className="rounded-full p-2 border border-1 border-[#5A5E75]/[.5]">
-          <RNPickerSelect
-            className=""
-            onValueChange={(value) => handleVoiceInput(value)}
-            items={voiceTest}
-          >
-            <Icon
-              name="message-text-outline"
-              size={30}
-              type="material-community"
-            />
-          </RNPickerSelect>
-        </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={toggleSpeechToText}
+        >
           <LinearGradient
-            style={{ elevation: 1 }}
+            style={started ? { elevation: 0 } : { elevation: 2 }}
             className="flex p-6 rounded-full"
             colors={["#34A853", "#3AAEF8"]}
             start={{ x: 1, y: 0 }}
@@ -123,12 +104,16 @@ const VoiceControl = ({ }) => {
               size={40}
               color={"white"}
               type="material-community"
+
             />
+            {/* {!started ? <Button title='Start Speech to Text' onPress={startSpeechToText} /> : undefined}
+              {started ? <Button title='Stop Speech to Text' onPress={stopSpeechToText} /> : undefined} */}
+
+            {/* <StatusBar style="auto" /> */}
+
           </LinearGradient>
         </TouchableOpacity>
-        <TouchableOpacity className="rounded-full p-2 border border-1 border-[#5A5E75]/[.5]">
-          <Icon name="replay" size={30} type="material-community" />
-        </TouchableOpacity>
+
       </View>
     </View>
   );

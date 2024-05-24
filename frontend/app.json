@@ -22,18 +22,27 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.tndgoat.tmp"
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.dadn.smarthome"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       [
-        "expo-font",
+        "@react-native-voice/voice",
         {
-          "fonts": "./assets/fonts/Poppins/Poppins-Regular.ttf"
+          "microphonePermission": "Allow Voice to Text Tutorial to access the microphone",
+          "speechRecognitionPermission": "Allow Voice to Text Tutorial to securely recognize user speech"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "716133ce-a89c-41ba-8c67-f17e3a9b46be"
+      }
+    }
   }
 }

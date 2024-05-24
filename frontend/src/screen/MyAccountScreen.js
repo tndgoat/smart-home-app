@@ -45,6 +45,9 @@ const Item = ({ title, navigation }) => (
       if (title.includes("My Home")) {
         navigation.navigate("My Home");
       }
+      if (title.includes("Power Usage")) {
+        navigation.navigate("Power Usage");
+      }
     }}
   >
     <View style={{ marginLeft: 20, marginTop: 40 }}>
@@ -82,7 +85,7 @@ const Item = ({ title, navigation }) => (
 
 export default function MyAccountScreen({ navigation }) {
   return (
-    <View>
+    <View style={{ backgroundColor: "#F0F5F4" }}>
       <View
         style={{
           height: 248,

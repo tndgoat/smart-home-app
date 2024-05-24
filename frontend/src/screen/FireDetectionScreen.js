@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 function FireDetectionScreen() {
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={{ alignItems: "center", backgroundColor: "#F0F5F4" }}>
       <Text
         style={{
           fontFamily: "Poppins-Regular",

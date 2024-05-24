@@ -5,6 +5,7 @@ import MyHomeScreen from "./MyHomeScreen";
 import MyAccountScreen from "./MyAccountScreen";
 import { View } from "react-native";
 import RoomScreen from "./RoomScreen";
+import PowerUsageScreen from "./PowerUsageScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,21 @@ const MyHomeAccountStack = () => {
         <Stack.Screen
           name="My Home"
           component={MyHomeScreen}
+          options={{
+            headerBackground: () => (
+              <View style={{ flex: 1, backgroundColor: "#F0F5F4" }} />
+            ),
+            headerBackTitleVisible: false,
+            headerTintColor: "black",
+            headerTitleStyle: {
+              fontFamily: "Poppins-SemiBold",
+              fontSize: "24",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Power Usage"
+          component={PowerUsageScreen}
           options={{
             headerBackground: () => (
               <View style={{ flex: 1, backgroundColor: "#F0F5F4" }} />

@@ -242,7 +242,7 @@ function AddRoom({ modalVisible, setModalVisible }) {
 export default function MyHomeScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "#F0F5F4" }}>
       <View style={styles.headerContainer}>
         <Text
           style={{
@@ -276,6 +276,7 @@ export default function MyHomeScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
+
       <View
         style={{
           margin: 20,

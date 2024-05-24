@@ -91,7 +91,7 @@ const RoomScreen = ({ navigation, route }) => {
   }, [navigation, roomName]);
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "#F0F5F4" }}>
       <View
         style={{
           margin: 20,
