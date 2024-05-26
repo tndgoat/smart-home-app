@@ -1,5 +1,3 @@
-// import mongoose from 'mongoose'
-
 const mongoose = require('mongoose');
 
 const connect = async () => {
@@ -7,9 +5,9 @@ const connect = async () => {
         await mongoose.connect(
             'mongodb+srv://tndgoat:smart-home-app-232@smart-home-app.7pukdmi.mongodb.net/?retryWrites=true&w=majority&appName=smart-home-app'
         );
-        console.log('Database Connect successfully!');
+        console.log('Connected successfully!');
     } catch (err) {
-        console.log('Connected fail: ', err);
+        console.log('Connection failed: ', err);
     }
 };
 

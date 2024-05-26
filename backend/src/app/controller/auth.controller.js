@@ -1,8 +1,9 @@
-const io = require('socket.io-client');
+const { io } = require('socket.io-client');
 const AccountModel = require('../model/account.model');
 
 class AuthController {
     constructor() {
+        this.name = 'authController';
         this.socket = io('http://localhost:3000');
 
         this.socket.on('connect', () => {

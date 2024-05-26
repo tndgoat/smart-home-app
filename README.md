@@ -11,5 +11,5 @@
 #### Frontend
 
 - Navigate to `./frontend`, then use `npm install`
-- To run, make sure to connect to the same wifi, then type `npx expo start`
+- To run, make sure to connect to the same wifi, then type `npx expo start --tunnel`
 - > If needed, update

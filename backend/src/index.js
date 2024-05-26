@@ -1,16 +1,14 @@
-
 const { Server } = require('socket.io');
-
 const db = require('./config/dbconnection');
 const MqttClient = require('./utils/mqttClient');
-const AuthController = require('./app/controller/auth.controller');
-const FanController = require('./app/controller/fan.controller');
-const FireController = require('./app/controller/fire.controller');
-const LightController = require('./app/controller/light.controller');
-const DoorController = require('./app/controller/door.controller');
-const TemperatureController = require('./app/controller/temp.controller');
-// import TemperatureController from './app/controller/temp.controller'
 
+const AuthController = require('./app/controller/auth.controller');
+const LightController = require('./app/controller/light.controller');
+const FanController = require('./app/controller/fan.controller');
+const TemperatureController = require('./app/controller/temp.controller');
+const HumidityController = require('./app/controller/humi.controller');
+const FireController = require('./app/controller/fire.controller');
+const DoorController = require('./app/controller/door.controller');
 
 const Subscriber = require('./utils/subscriber');
 
@@ -20,12 +18,14 @@ db.connect()
 const mqttClient = new MqttClient();
 const [
     temperature,
+    humidity,
     door,
     light,
     fan,
     fire,
 ] = [
     'temperature',
+    'humidity',
     'door',
     'light',
     'fan',
@@ -34,6 +34,7 @@ const [
 
 const authController = new AuthController();
 const temperatureController = new TemperatureController();
+const humidityController = new HumidityController();
 const lightController = new LightController(mqttClient, light.feed);
 const fanController = new FanController(mqttClient, fan.feed);
 const fireController = new FireController();
@@ -41,6 +42,8 @@ const doorController = new DoorController();
 
 mqttClient.subscribe(temperatureController, temperature.name)
 mqttClient.subscribeTopic(temperature.feed)
+mqttClient.subscribe(humidityController, humidity.name)
+mqttClient.subscribeTopic(humidity.feed)
 mqttClient.subscribe(doorController, door.name)
 mqttClient.subscribeTopic(door.feed)
 mqttClient.subscribe(lightController, light.name)

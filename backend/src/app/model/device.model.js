@@ -51,6 +51,16 @@ const TemperatureModel = DeviceModel.discriminator(
     )
 );
 
+const HumidityModel = DeviceModel.discriminator(
+    'Humidity',
+    new Schema(
+        {
+            value: { type: Number, required: true },
+        },
+        options
+    )
+);
+
 const FanModel = DeviceModel.discriminator(
     'Fan',
     new Schema(
@@ -67,5 +77,6 @@ module.exports = {
     DoorModel,
     SpeakerModel,
     TemperatureModel,
+    HumidityModel,
     FanModel,
 };

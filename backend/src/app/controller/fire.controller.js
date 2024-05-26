@@ -6,6 +6,7 @@ class FireController extends Subscriber {
     constructor() {
         super();
         this.socket = io('http://localhost:3000');
+        this.name = 'fireController';
 
         this.socket.on('connect', () => {
             this.socket.emit('join controller room', this.name);
