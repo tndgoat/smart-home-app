@@ -31,16 +31,6 @@ const DoorModel = DeviceModel.discriminator(
     )
 );
 
-const SpeakerModel = DeviceModel.discriminator(
-    'Speaker',
-    new Schema(
-        {
-            status: { type: Boolean, required: true },
-        },
-        options
-    )
-);
-
 const TemperatureModel = DeviceModel.discriminator(
     'Temperature',
     new Schema(
@@ -75,7 +65,6 @@ module.exports = {
     DeviceModel,
     LightModel,
     DoorModel,
-    SpeakerModel,
     TemperatureModel,
     HumidityModel,
     FanModel,

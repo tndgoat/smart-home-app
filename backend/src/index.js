@@ -3,12 +3,12 @@ const db = require('./config/dbconnection');
 const MqttClient = require('./utils/mqttClient');
 
 const AuthController = require('./app/controller/auth.controller');
-const LightController = require('./app/controller/light.controller');
-const FanController = require('./app/controller/fan.controller');
-const TemperatureController = require('./app/controller/temp.controller');
-const HumidityController = require('./app/controller/humi.controller');
-const FireController = require('./app/controller/fire.controller');
 const DoorController = require('./app/controller/door.controller');
+const FanController = require('./app/controller/fan.controller');
+const FireController = require('./app/controller/fire.controller');
+const HumidityController = require('./app/controller/humi.controller');
+const LightController = require('./app/controller/light.controller');
+const TemperatureController = require('./app/controller/temp.controller');
 
 const Subscriber = require('./utils/subscriber');
 
@@ -35,10 +35,10 @@ const [
 const authController = new AuthController();
 const temperatureController = new TemperatureController();
 const humidityController = new HumidityController();
+const doorController = new DoorController(mqttClient, door.feed);
 const lightController = new LightController(mqttClient, light.feed);
 const fanController = new FanController(mqttClient, fan.feed);
 const fireController = new FireController();
-const doorController = new DoorController();
 
 mqttClient.subscribe(temperatureController, temperature.name)
 mqttClient.subscribeTopic(temperature.feed)
